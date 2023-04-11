@@ -18,25 +18,27 @@ public class ArvoreBinaria<T extends Comparable<T>> {
             return novoNo;
         } else if (novoNo.getConteudo().compareTo(atual.getConteudo()) < 0) {
             atual.setNoEsq(inserir(atual.getNoEsq(), novoNo));
+        }else {
+            atual.setNoDir(inserir(atual.getNoDir(), novoNo));
         }
         return atual;
     }
 
     public void exibirInOrdem() {
-        System.out.println("\n Exibindo InOrdem");
+        System.out.print("\n Exibindo InOrdem\n");
         exibirInOrdem(this.raiz);
     }
 
     private void exibirInOrdem(BinNo<T> atual) {
         if (atual != null) {
             exibirInOrdem(atual.getNoEsq());
-            System.out.println(atual.getConteudo() + ", ");
+            System.out.print(atual.getConteudo() + ", ");
             exibirInOrdem(atual.getNoDir());
         }
     }
 
     public void exibirPosOrdem() {
-        System.out.println("\n Exibindo PosOrdem");
+        System.out.print("\n Exibindo PosOrdem\n");
         exibirPosOrdem(this.raiz);
     }
 
@@ -44,96 +46,132 @@ public class ArvoreBinaria<T extends Comparable<T>> {
         if (atual != null) {
             exibirPosOrdem(atual.getNoEsq());
             exibirPosOrdem(atual.getNoDir());
-            System.out.println(atual.getConteudo() + ", ");
+            System.out.print(atual.getConteudo() + ", ");
 
         }
     }
 
     public void exibirPreOrdem() {
-        System.out.println("\n Exibindo PreOrdem");
+        System.out.print("\n Exibindo PreOrdem\n");
         exibirPreOrdem(this.raiz);
     }
 
     private void exibirPreOrdem(BinNo<T> atual) {
         if (atual != null) {
-            System.out.println(atual.getConteudo() + ", ");
+            System.out.print(atual.getConteudo() + ", ");
             exibirPreOrdem(atual.getNoEsq());
             exibirPreOrdem(atual.getNoDir());
         }
     }
 
-    public void remover(T conteudo) {
-        try {
-            BinNo<T> atual = this.raiz;
-            BinNo<T> pai = null;
-            BinNo<T> filho = null;
-            BinNo<T> temp = null;
+//    public void remover(T conteudo) {
+//        try {
+//            BinNo<T> atual = this.raiz;
+//            BinNo<T> pai = null;
+//            BinNo<T> filho = null;
+//            BinNo<T> temp = null;
+//
+//            while (atual != null && !atual.getConteudo().equals(conteudo)) {
+//                pai = atual;
+//                if (conteudo.compareTo(atual.getConteudo()) < 0) {
+//                    atual = atual.getNoEsq();
+//                } else {
+//                    atual = atual.getNoDir();
+//                }
+//            }
+//
+//            if (atual == null) {
+//                System.out.print("Conteúdo não encontrado!");
+//            }
+//
+//            if (pai == null) {
+//                if (atual.getNoDir() == null) {
+//                    this.raiz = atual.getNoEsq();
+//                } else if (atual.getNoEsq() == null) {
+//                    this.raiz = atual.getNoDir();
+//                } else {
+//                    for (temp = atual, filho = atual.getNoEsq();
+//                         filho.getNoDir() != null;
+//                         temp = filho, filho = filho.getNoEsq()) {
+//                        if (filho != atual.getNoEsq()) {
+//                            temp.setNoDir(filho.getNoEsq());
+//                            filho.setNoEsq(raiz.getNoEsq());
+//                        }
+//                    }
+//                    filho.setNoDir(raiz.getNoDir());
+//                    raiz = filho;
+//                }
+//            } else if (atual.getNoDir() == null) {
+//                if (pai.getNoEsq() == atual) {
+//                    pai.setNoEsq(atual.getNoEsq());
+//                } else {
+//                    pai.setNoDir(atual.getNoEsq());
+//                }
+//            } else if (atual.getNoEsq() == null) {
+//                if (pai.getNoEsq() == atual) {
+//                    pai.setNoEsq(atual.getNoDir());
+//                } else {
+//                    pai.setNoDir(atual.getNoDir());
+//                }
+//            } else {
+//                for (
+//                        temp = atual, filho = atual.getNoEsq();
+//                        filho.getNoDir() != null;
+//                        temp = filho, filho = filho.getNoDir()
+//                ) {
+//                    if (filho != atual.getNoEsq()) {
+//                        temp.setNoDir(filho.getNoEsq());
+//                        filho.setNoEsq(atual.getNoEsq());
+//                    }
+//                    filho.setNoDir(atual.getNoDir());
+//                    if (pai.getNoEsq() == atual) {
+//                        pai.setNoEsq(filho);
+//                    } else {
+//                        pai.setNoDir(filho);
+//                    }
+//                }
+//            }
+//
+//        } catch (NullPointerException err) {
+//            System.out.print("Conteúdo não encontrado!");
+//
+//        }
+//    }
 
-            while (atual != null && !atual.getConteudo().equals(conteudo)) {
-                pai = atual;
-                if (conteudo.compareTo(atual.getConteudo()) < 0) {
-                    atual = atual.getNoEsq();
-                } else {
-                    atual = atual.getNoDir();
-                }
-            }
-
-            if (atual == null) {
-                System.out.println("Conteúdo não encontrado!");
-            }
-
-            if (pai == null) {
-                if (atual.getNoDir() == null) {
-                    this.raiz = atual.getNoEsq();
-                } else if (atual.getNoEsq() == null) {
-                    this.raiz = atual.getNoDir();
-                } else {
-                    for (temp = atual, filho = atual.getNoEsq();
-                         filho.getNoDir() != null;
-                         temp = filho, filho = filho.getNoEsq()) {
-                        if (filho != atual.getNoEsq()) {
-                            temp.setNoDir(filho.getNoEsq());
-                            filho.setNoEsq(raiz.getNoEsq());
-                        }
-                    }
-                    filho.setNoDir(raiz.getNoDir());
-                    raiz = filho;
-                }
-            } else if (atual.getNoDir() == null) {
-                if (pai.getNoEsq() == atual) {
-                    pai.setNoEsq(atual.getNoEsq());
-                } else {
-                    pai.setNoDir(atual.getNoEsq());
-                }
-            } else if (atual.getNoEsq() == null) {
-                if (pai.getNoEsq() == atual) {
-                    pai.setNoEsq(atual.getNoDir());
-                } else {
-                    pai.setNoDir(atual.getNoDir());
-                }
-            } else {
-                for (
-                        temp = atual, filho = atual.getNoEsq();
-                        filho.getNoDir() != null;
-                        temp = filho, filho = filho.getNoDir()
-                ) {
-                    if (filho != atual.getNoEsq()) {
-                        temp.setNoDir(filho.getNoEsq());
-                        filho.setNoEsq(atual.getNoEsq());
-                    }
-                    filho.setNoDir(atual.getNoDir());
-                    if (pai.getNoEsq() == atual) {
-                        pai.setNoEsq(filho);
-                    } else {
-                        pai.setNoDir(filho);
-                    }
-                }
-            }
-
-        } catch (NullPointerException err) {
-            System.out.println("Conteúdo não encontrado!");
-
+    //remover recursivo
+    public BinNo<T> removerRecursivo(BinNo<T> atual, T conteudo) {
+        if (atual == null) {
+            System.out.print("Conteúdo não encontrado!");
+            return null;
         }
+
+        if (conteudo.compareTo(atual.getConteudo()) < 0) {
+            atual.setNoEsq(removerRecursivo(atual.getNoEsq(), conteudo));
+        } else if (conteudo.compareTo(atual.getConteudo()) > 0) {
+            atual.setNoDir(removerRecursivo(atual.getNoDir(), conteudo));
+        } else {
+            if (atual.getNoEsq() == null) {
+                return atual.getNoDir();
+            } else if (atual.getNoDir() == null) {
+                return atual.getNoEsq();
+            } else {
+                BinNo<T> menor = encontrarMenor(atual.getNoDir());
+                atual.setConteudo(menor.getConteudo());
+                atual.setNoDir(removerRecursivo(atual.getNoDir(), menor.getConteudo()));
+            }
+        }
+        return atual;
+    }
+
+    public BinNo<T> encontrarMenor(BinNo<T> no) {
+        while (no.getNoEsq() != null) {
+            no = no.getNoEsq();
+        }
+        return no;
+    }
+
+    public void remover(T conteudo) {
+        this.raiz = removerRecursivo(this.raiz, conteudo);
     }
 
 }
